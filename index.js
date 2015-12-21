@@ -5,9 +5,12 @@ let app = express();
 let bodyParser = require('body-parser');
 let cp = require("child_process");
 
-const MAPPING = {
-  "git@code.ipd.kit.edu:pgrep/pgrep.git": "git@bitbucket.org:FlorianLoch/pgrep_mirror.git"
-};
+const MAPPING = require("./config.json");
+
+console.log("Set up to mirror the following repositories: ");
+for (let key in MAPPING) {
+  console.log(`${key} => ${MAPPING[key]}`);
+}
 
 app.use(bodyParser.json());
 
@@ -35,6 +38,10 @@ app.post("/gitmirror", (req, res) => {
   }
 
   res.send("OK");
+});
+
+app.use((req, res) => {
+  res.status(401).send("This service is just available via POST /gitmirror");
 });
 
 app.listen(32320, () => {
