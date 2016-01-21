@@ -15,10 +15,12 @@ let cwd = process.cwd();
 
 console.log(args);
 
+let forcePush = (process.env.DO_FORCE_PUSH === "yes") ? "--force" : "";
+
 let commands = [
   {cmd: "git", args: ["clone", "--mirror", origin, subdir], cwd: cwd},
   {cmd: `git`, args: ["remote", "add", "target", target], cwd: path.join(cwd, subdir)},
-  {cmd: `git`, args: ["push", "--all --force", "target"], cwd: path.join(cwd, subdir)}
+  {cmd: `git`, args: ["push", "--all", forcePush, "target"], cwd: path.join(cwd, subdir)}
 ];
 commands.forEach((task) => {
   let output = cp.spawnSync(task.cmd, task.args, {
