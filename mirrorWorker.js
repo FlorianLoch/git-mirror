@@ -18,7 +18,7 @@ console.log(args);
 let commands = [
   {cmd: "git", args: ["clone", "--mirror", origin, subdir], cwd: cwd},
   {cmd: `git`, args: ["remote", "add", "target", target], cwd: path.join(cwd, subdir)},
-  {cmd: `git`, args: ["push", "--all", "target"], cwd: path.join(cwd, subdir)}
+  {cmd: `git`, args: ["push", "--all --force", "target"], cwd: path.join(cwd, subdir)}
 ];
 commands.forEach((task) => {
   let output = cp.spawnSync(task.cmd, task.args, {
